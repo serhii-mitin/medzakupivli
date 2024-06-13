@@ -1,0 +1,89 @@
+version: "3.8"
+
+services:
+  nginx:
+    image: ${NGINX_IMAGE}
+    container_name: "${PROJECT_NAME}-nginx"
+    environment:
+      - NGINX_HOST=${NGINX_TEMPLATE_HOST}
+      - NGINX_PORT=${NGINX_TEMPLATE_PORT}
+      - NGINX_FASTCGI_PASS=${NGINX_FASTCGI_PASS}
+    restart: no
+    volumes:
+      - ./nginx/templates:/etc/nginx/templates
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:rw
+      - ./../:/var/www
+    ports:
+      - ${NGINX_PORT}:${NGINX_TEMPLATE_PORT}
+    depends_on:
+      - app
+
+  app:
+    build:
+      context: ./php-fpm
+      dockerfile: Dockerfile
+      args:
+        - IMAGE_NAME=${PHP_FPM_IMAGE}
+        - CONTAINER_USER=${CONTAINER_USER}
+        - UID=${UID}
+        - GID=${GID}
+        - INSTALL_SUPERVISOR=${INSTALL_SUPERVISOR}
+        - INSTALL_IMAGEMAGICK=${INSTALL_IMAGEMAGICK}
+        - IMAGEMAGICK_VERSION=${IMAGEMAGICK_VERSION}
+        - INSTALL_XDEBUG=${INSTALL_XDEBUG}
+        - INSTALL_SYMFONY_CLI=${INSTALL_SYMFONY_CLI}
+    container_name: "${PROJECT_NAME}-app"
+    restart: no
+    user: ${CONTAINER_USER}
+    volumes:
+      - ./php-fpm/php.ini:/usr/local/etc/php/conf.d/php.ini
+      #- ./php-fpm/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+      - ./../:/var/www
+    depends_on:
+      - db
+
+  db:
+    image: ${DB_IMAGE}
+    container_name: "${PROJECT_NAME}-db"
+    restart: no
+    tty: true
+    ports:
+      - ${DB_PORT}:5432
+    command: [ "postgres", "-c", "config_file=/etc/postgresql/postgres.conf" ]
+    volumes:
+      - ./postgres/postgresql.conf:/etc/postgresql/postgres.conf:ro
+      - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+
+  #DB Mysql service
+  db:
+    image: ${DB_IMAGE}
+    container_name: "${PROJECT_NAME}-db"
+    restart: no
+    tty: true
+    ports:
+      - ${DB_PORT}:3306
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./mysql/conf.d:/etc/mysql/conf.d:ro
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+
+  redis:
+    image: ${REDIS_IMAGE}
+    container_name: "${PROJECT_NAME}-redis"
+    restart: no
+    tty: true
+    ports:
+      - ${REDIS_PORT}:6379
+    volumes:
+      - ./redis/redis.conf:/usr/local/etc/redis
+
+volumes:
+  db_data:
