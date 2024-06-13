@@ -15,5 +15,13 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call(UserRolesSeeder::class);
+
+        if (in_array(config('app.env'), ['local'])) {
+            $this->call(MedicalFacilitiesSeeder::class);
+            $this->call(PatientsSeeder::class);
+            $this->call(VaccinesSeeder::class);
+            $this->call(VaccinesDosesSeeder::class);
+            $this->call(VaccinesDosesToMedicalFacilitiesSeeder::class);
+        }
     }
 }
