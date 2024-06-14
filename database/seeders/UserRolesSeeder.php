@@ -32,7 +32,7 @@ class UserRolesSeeder extends Seeder
             [
                 'name' => 'Super Admin',
                 'email' => config('common.super_admin.email'),
-                'password' => Hash::make('!Qwerty123'),
+                'password' => Hash::make(config('common.super_admin.password')),
                 'email_verified_at' => now(),
                 'created_at' => now(),
                 'updated_at' => now()
@@ -40,7 +40,7 @@ class UserRolesSeeder extends Seeder
             [
                 'name' => 'Patient',
                 'email' => config('common.patient.email'),
-                'password' => Hash::make('!Qwerty123'),
+                'password' => Hash::make(config('common.patient.password')),
                 'email_verified_at' => now(),
                 'created_at' => now(),
                 'updated_at' => now()

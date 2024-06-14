@@ -1,0 +1,132 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Api Documentation",
+        "description": "api",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8080",
+            "description": "Local server"
+        }
+    ],
+    "paths": {
+        "/api/admin/vaccines": {
+            "get": {
+                "tags": [
+                    "Admin/Vaccines"
+                ],
+                "summary": "Vaccines list",
+                "operationId": "c3719947854e94c518e5de3f21087281",
+                "responses": {
+                    "200": {
+                        "description": "the list off vaccines"
+                    }
+                }
+            }
+        },
+        "/api/admin/vaccines/{id}": {
+            "get": {
+                "tags": [
+                    "Admin/Vaccines"
+                ],
+                "summary": "Single Vaccine",
+                "operationId": "8fabcc6b0d64a98cf56ff176f0671bac",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "default": "1"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "the vaccine retrieved success"
+                    },
+                    "404": {
+                        "description": "the vaccine not found"
+                    }
+                }
+            }
+        },
+        "/api/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Auth Login",
+                "operationId": "9f8e41671b2207d56a3a20586586cc13",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "default": ""
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "default": ""
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "422": {
+                        "description": "Incorrect login data"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/me": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "me",
+                "operationId": "f1827f03fdceb0cb46eed198232dae52",
+                "responses": {
+                    "200": {
+                        "description": "Auth user resource"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "Bearer": {
+                "type": "apiKey",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    }
+}
