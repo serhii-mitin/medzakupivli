@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\v1\Admin\MedicalFacilityController;
 use App\Http\Controllers\Api\v1\Admin\VaccineController;
 use App\Http\Controllers\Api\v1\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
@@ -48,6 +49,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         |--------------------------------------------------------------------------
         */
         Route::apiResource('vaccines', VaccineController::class)->only(['index', 'show']);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Medical Facility Routes
+        |--------------------------------------------------------------------------
+        */
+        Route::apiResource('medical-facilities', MedicalFacilityController::class)->only(['index', 'show']);
     });
 });
 

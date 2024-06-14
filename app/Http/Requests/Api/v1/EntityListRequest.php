@@ -23,7 +23,6 @@ abstract class EntityListRequest extends FormRequest
             'per_page' => 'nullable|integer',
             'sort_field' => 'nullable|string',
             'sort_direction' => 'nullable|in:asc,desc',
-            'search' => 'nullable|string'
         ];
     }
 

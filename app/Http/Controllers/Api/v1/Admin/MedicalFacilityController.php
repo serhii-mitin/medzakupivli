@@ -3,26 +3,25 @@
 namespace App\Http\Controllers\Api\v1\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\v1\Admin\Vaccine\VaccineListRequest;
-use App\Http\Resources\Api\v1\Admin\Vaccine\VaccineListResource;
-use App\Http\Resources\Api\v1\Admin\Vaccine\VaccineResource;
-use App\Models\Vaccine;
-use App\Services\Api\v1\VaccineService;
+use App\Http\Requests\Api\v1\Admin\MedicalFacility\MedicalFacilityListRequest;
+use App\Http\Resources\Api\v1\Admin\MedicalFacility\MedicalFacilityListResource;
+use App\Http\Resources\Api\v1\Admin\MedicalFacility\MedicalFacilityResource;
+use App\Models\MedicalFacility;
+use App\Services\Api\v1\MedicalFacilityService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use OpenApi\Attributes as OA;
 
-class VaccineController extends Controller
+class MedicalFacilityController extends Controller
 {
-    public function __construct(protected readonly VaccineService $service)
+    public function __construct(protected readonly MedicalFacilityService $service)
     {
     }
 
-
     #[OA\Get(
-        path: "/api/admin/vaccines",
-        summary: "Vaccines list",
-        tags: ["Admin/Vaccines"],
+        path: "/api/admin/medical-facilities",
+        summary: "Medical Facility list",
+        tags: ["Admin/MedicalFacility"],
         security: [
             ["Bearer" => []]
         ],
@@ -68,20 +67,20 @@ class VaccineController extends Controller
             )
         ],
         responses: [
-            new OA\Response(response: JsonResponse::HTTP_OK, description: 'the list off vaccines')
+            new OA\Response(response: JsonResponse::HTTP_OK, description: 'the list off medical facilities')
         ]
     )]
-    public function index(VaccineListRequest $request): AnonymousResourceCollection
+    public function index(MedicalFacilityListRequest $request): AnonymousResourceCollection
     {
         $pagination = $this->service->getList($request->validated());
 
-        return VaccineListResource::collection($pagination);
+        return MedicalFacilityListResource::collection($pagination);
     }
 
     #[OA\Get(
-        path: "/api/admin/vaccines/{id}",
-        summary: "Single Vaccine",
-        tags: ["Admin/Vaccines"],
+        path: "/api/admin/medical-facilities/{id}",
+        summary: "Single Medical Facility",
+        tags: ["Admin/MedicalFacility"],
         parameters: [
             new OA\PathParameter(
                 name: 'id',
@@ -94,12 +93,12 @@ class VaccineController extends Controller
             ["Bearer" => []]
         ],
         responses: [
-            new OA\Response(response: JsonResponse::HTTP_OK, description: "the vaccine retrieved success"),
-            new OA\Response(response: JsonResponse::HTTP_NOT_FOUND, description: "the vaccine not found")
+            new OA\Response(response: JsonResponse::HTTP_OK, description: "the medical facility retrieved success"),
+            new OA\Response(response: JsonResponse::HTTP_NOT_FOUND, description: "the medical facility not found")
         ]
     )]
-    public function show(Vaccine $vaccine): VaccineResource
+    public function show(MedicalFacility $medicalFacility): MedicalFacilityResource
     {
-        return VaccineResource::make($vaccine);
+        return MedicalFacilityResource::make($medicalFacility);
     }
 }

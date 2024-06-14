@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Utils\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -16,7 +17,8 @@ class User extends Authenticatable
         Notifiable,
         HasRoles,
         HasApiTokens,
-        SoftDeletes;
+        SoftDeletes,
+        Filterable;
 
     /**
      * The attributes that are mass assignable.
