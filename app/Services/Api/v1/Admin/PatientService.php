@@ -1,18 +1,20 @@
 <?php
 
-namespace App\Services\Api\v1;
+namespace App\Services\Api\v1\Admin;
 
-use App\Models\Vaccine;
-use App\Utils\Filters\Admin\AdminVaccineFilter;
+use App\Models\User;
+use App\Utils\Enums\User\UserRoleEnum;
+use App\Utils\Filters\Admin\AdminPatientFilter;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class VaccineService
+class PatientService
 {
     public function getList(array $filterParams): LengthAwarePaginator
     {
-        $queryFilter = new AdminVaccineFilter($filterParams);
+        $filterParams['filter']['role_name'] = UserRoleEnum::PATIENT;
+        $queryFilter = new AdminPatientFilter($filterParams);
 
-        return Vaccine::filter($queryFilter)
+        return User::filter($queryFilter)
             ->paginate(
                 $filterParams['per_page'] ?? config('common.default_per_page'),
                 ['*'],

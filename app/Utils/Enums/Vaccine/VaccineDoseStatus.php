@@ -8,7 +8,9 @@ class VaccineDoseStatus extends Enum
 {
     const NEW = 1;
 
-    const OPEN = 2;
+    const SELECTED = 2;
 
     const UTILIZED = 3;
+
+    const USED = 4;
 }

@@ -20,7 +20,7 @@ class VaccineDoseFactory extends Factory
         return [
             'vaccine_id' => Vaccine::pluck('id')->random(),
             'serial_number' => $this->faker->unique()->slug,
-            'volume' => $this->faker->randomElement([5, 10]),
+            'volume' => $this->faker->randomElement([1, 2]),
             'expiration_date' => $this->faker->dateTimeBetween('now', '+2 years'),
         ];
     }

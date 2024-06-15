@@ -7,7 +7,7 @@ use App\Http\Requests\Api\v1\Admin\MedicalFacility\MedicalFacilityListRequest;
 use App\Http\Resources\Api\v1\Admin\MedicalFacility\MedicalFacilityListResource;
 use App\Http\Resources\Api\v1\Admin\MedicalFacility\MedicalFacilityResource;
 use App\Models\MedicalFacility;
-use App\Services\Api\v1\MedicalFacilityService;
+use App\Services\Api\v1\Admin\MedicalFacilityService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use OpenApi\Attributes as OA;

@@ -17,14 +17,13 @@ class VaccineDose extends Model
         'serial_number',
         'volume',
         'expiration_date',
-        'open_date',
-        'used_volume',
+        'used_date',
         'status',
     ];
 
     protected $casts = [
         'expiration_date' => 'date',
-        'open_date' => 'date',
+        'used_date' => 'date',
     ];
 
     protected function statusName(): Attribute

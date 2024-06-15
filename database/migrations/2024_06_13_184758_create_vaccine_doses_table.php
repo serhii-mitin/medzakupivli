@@ -19,9 +19,9 @@ return new class extends Migration {
 
             $table->string('serial_number', 255)->unique();
             $table->date('expiration_date');
-            $table->date('open_date')->nullable();
+            $table->unsignedSmallInteger('status')->default(\App\Utils\Enums\Vaccine\VaccineDoseStatus::NEW);
+            $table->date('used_date')->nullable();
             $table->unsignedSmallInteger('volume');
-            $table->unsignedSmallInteger('used_volume')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

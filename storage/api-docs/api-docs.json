@@ -105,6 +105,168 @@
                 ]
             }
         },
+        "/api/admin/patients": {
+            "get": {
+                "tags": [
+                    "Admin/Patients"
+                ],
+                "summary": "Patients list",
+                "operationId": "b58de8ac4cc587ec3c6c53e163004e15",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number for pagination",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Number of items per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10
+                        }
+                    },
+                    {
+                        "name": "sort_field",
+                        "in": "query",
+                        "description": "Sort field",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "id"
+                        }
+                    },
+                    {
+                        "name": "filter[search]",
+                        "in": "query",
+                        "description": "Search term",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "the list off patients"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/patients/{id}": {
+            "get": {
+                "tags": [
+                    "Admin/Patients"
+                ],
+                "summary": "Single Patient",
+                "operationId": "c98ca70b8cddeb4be9c5344a5e907d33",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "default": "1"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "the patient retrieved success"
+                    },
+                    "404": {
+                        "description": "the patient not found"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/patients/{patient_id}/vaccination-history": {
+            "get": {
+                "tags": [
+                    "Admin/Patients/VaccinationHistory"
+                ],
+                "summary": "Single Patient",
+                "operationId": "47faa7d6c1227ea42c03f834a3fb72b6",
+                "parameters": [
+                    {
+                        "name": "patient_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "default": "1"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "the list"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/patients/{patient_id}/vaccination-history/{vh_id}/cancel": {
+            "post": {
+                "tags": [
+                    "Admin/Patients/VaccinationHistory"
+                ],
+                "summary": "Single Patient",
+                "operationId": "fd273d9d4d1c838e4d37a304e4510d90",
+                "parameters": [
+                    {
+                        "name": "patient_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "default": "1"
+                        }
+                    },
+                    {
+                        "name": "vh_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "default": "1"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "the list"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
         "/api/admin/vaccines": {
             "get": {
                 "tags": [
@@ -254,6 +416,171 @@
                 "responses": {
                     "200": {
                         "description": "Auth user resource"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/vaccination-history/store/get-vaccines": {
+            "get": {
+                "tags": [
+                    "Patient/VaccinationHistory"
+                ],
+                "summary": "Vaccines list",
+                "operationId": "93c75e6f5b7ded8824d769cadd1120c4",
+                "responses": {
+                    "200": {
+                        "description": "the list off vaccines"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/vaccination-history/store/get-medical-facilities": {
+            "get": {
+                "tags": [
+                    "Patient/VaccinationHistory"
+                ],
+                "summary": "Medical Facilities list",
+                "operationId": "a129fc9148f658ca2dfa79cbc9e888f7",
+                "parameters": [
+                    {
+                        "name": "vaccine_id",
+                        "in": "query",
+                        "description": "Vaccine id",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "the list"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/vaccination-history/store/get-dates": {
+            "get": {
+                "tags": [
+                    "Patient/VaccinationHistory"
+                ],
+                "summary": "Dates list",
+                "operationId": "cbade9fe9a766882660b7d161c97e709",
+                "parameters": [
+                    {
+                        "name": "vaccine_id",
+                        "in": "query",
+                        "description": "Vaccine id",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "medical_facility_id",
+                        "in": "query",
+                        "description": "Id",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "start_time",
+                        "in": "query",
+                        "description": "Start Time",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "2024-09-01 10:00:00"
+                        }
+                    },
+                    {
+                        "name": "end_time",
+                        "in": "query",
+                        "description": "End Time",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "2024-09-01 10:00:00"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "the list"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/vaccination-history/store": {
+            "post": {
+                "tags": [
+                    "Patient/VaccinationHistory"
+                ],
+                "summary": "Store",
+                "operationId": "6f2df76b75646cd4f78f89adf4f4448c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "vaccine_id",
+                                    "medical_facility_id",
+                                    "selected_time"
+                                ],
+                                "properties": {
+                                    "vaccine_id": {
+                                        "type": "integer",
+                                        "default": 1
+                                    },
+                                    "medical_facility_id": {
+                                        "type": "integer",
+                                        "default": 1
+                                    },
+                                    "selected_time": {
+                                        "type": "string",
+                                        "default": "2024-06-20 10:00:00"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "409": {
+                        "description": "Incorrect data"
+                    },
+                    "422": {
+                        "description": "Incorrect data"
                     }
                 },
                 "security": [
